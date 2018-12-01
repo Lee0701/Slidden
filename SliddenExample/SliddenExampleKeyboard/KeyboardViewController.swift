@@ -11,16 +11,58 @@ import Slidden
 
 let englishKeys: [[String]] = [
     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["shift", "Z", "X", "C", "V", "B", "N", "M", "backspace"],
+    ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p"],
+    ["a", "s", "d", "f", "g", "h", "j", "k", "l"],
+    ["shift", "z", "x", "c", "v", "b", "n", "m", "backspace"],
     ["123", "next", "space", "return"]
 ]
 
+let layoutQwerty: [String: [String]] = [
+    "1": ["1", "!"],
+    "2": ["2", "@"],
+    "3": ["3", "#"],
+    "4": ["4", "$"],
+    "5": ["5", "%"],
+    "6": ["6", "^"],
+    "7": ["7", "&"],
+    "8": ["8", "*"],
+    "9": ["9", "("],
+    "0": ["0", ")"],
+    "Q": ["q", "Q"],
+    "W": ["w", "W"],
+    "E": ["e", "E"],
+    "R": ["r", "R"],
+    "T": ["t", "T"],
+    "Y": ["y", "Y"],
+    "U": ["u", "U"],
+    "I": ["i", "I"],
+    "O": ["o", "O"],
+    "P": ["p", "P"],
+    "A": ["a", "A"],
+    "S": ["s", "S"],
+    "D": ["d", "D"],
+    "F": ["f", "F"],
+    "G": ["g", "G"],
+    "H": ["h", "H"],
+    "J": ["j", "J"],
+    "K": ["k", "K"],
+    "L": ["l", "L"],
+    "Z": ["z", "Z"],
+    "X": ["x", "X"],
+    "C": ["c", "C"],
+    "V": ["v", "V"],
+    "B": ["b", "B"],
+    "N": ["n", "N"],
+    "M": ["m", "M"],
+]
 
 class KeyboardViewController: Slidden.KeyboardViewController {
+    
     var updatedConstraints = false
     var heightConstraint: NSLayoutConstraint!
+    
+    var layout: [String: [String]] = layoutQwerty
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,7 +137,7 @@ class KeyboardViewController: Slidden.KeyboardViewController {
                     type = .Character
                 }
                 
-                let keyboardKey = KeyboardKeyView(type: type, keyCap: key, outputText: key)
+                let keyboardKey = KeyboardKeyView(type: type, keyCap: layout[key]?[0] ?? key.lowercased(), keyCapShifted: layout[key]?[1] ?? key.uppercased(), outputText: key)
                 keyboardKey.textColor = UIColor.white
                 keyboardKey.color = ((rowIndex % 2) == 0) ? UIColor(hex:0x5B568A) : UIColor(hex: 0x443F78)
                 keyboardKey.selectedColor = ((rowIndex % 2) == 0) ? UIColor(hex: 0x443F78) : UIColor(hex: 0x5B568A)
@@ -137,7 +179,21 @@ class KeyboardViewController: Slidden.KeyboardViewController {
     
     ///MARK: Inherited Delegate Methods
     override func keyPressed(key: KeyboardKeyView) {
-        super.keyPressed(key: key)
+        UIDevice.current.playInputClick()
+        spaceWaiting = false
+        
+        if let text = key.outputText {
+            if key.shifted {
+                textDocument.insertText(text: layout[text]?[1] ?? text.uppercased())
+            } else {
+                textDocument.insertText(text: layout[text]?[0] ?? text.lowercased())
+            }
+        }
+        
+        if autoShifted {
+            keyboardView.setShift(shift: false)
+            autoShifted = false
+        }
     }
     
     override func returnKeyPressed(key: KeyboardKeyView) {

@@ -24,7 +24,7 @@ open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, 
     open var shouldLayoutKeyboardConstraintsAutomatically: Bool = true
     
     private var layoutConstrained: Bool = false
-    private var spaceWaiting: Bool = false
+    open var spaceWaiting: Bool = false
     
     open override func viewDidLoad() {
         super.viewDidLoad()

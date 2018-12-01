@@ -34,16 +34,17 @@ public class KeyboardKeyView: UIControl {
             self.redrawText()
         }
     }
+    public var keyCapShifted: String? {
+        didSet {
+            self.redrawText()
+        }
+    }
     
     public var outputText: String?
     
     public var shifted: Bool = false {
-        willSet(newShifted) {
-            if newShifted {
-                self.textLabel.text = keyCap?.uppercased()
-            } else {
-                self.textLabel.text = keyCap?.lowercased()
-            }
+        didSet {
+            self.redrawText()
         }
     }
     
@@ -104,14 +105,19 @@ public class KeyboardKeyView: UIControl {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public convenience init(type: KeyType, keyCap: String, outputText: String) {
+    public convenience init(type: KeyType, keyCap: String, keyCapShifted: String?, outputText: String) {
         self.init()
         
         self.type = type
         self.outputText = outputText
         self.keyCap = keyCap
+        self.keyCapShifted = keyCapShifted
         
         setup()
+    }
+    
+    public convenience init(type: KeyType, keyCap: String, outputText: String) {
+        self.init(type: type, keyCap: keyCap, keyCapShifted: nil, outputText: outputText)
     }
     
     func setup() {
@@ -208,10 +214,18 @@ public class KeyboardKeyView: UIControl {
     
     ///MARK: Text Management
     func redrawText() {
-        if let cap = self.keyCap {
-            self.textLabel.text = cap
+        if(shifted) {
+            if let cap = self.keyCapShifted {
+                self.textLabel.text = cap
+            } else {
+                self.textLabel.text = ""
+            }
         } else {
-            self.textLabel.text = ""
+            if let cap = self.keyCap {
+                self.textLabel.text = cap
+            } else {
+                self.textLabel.text = ""
+            }
         }
     }
     

@@ -9,9 +9,13 @@
 import UIKit
 import Slidden
 
-let englishKeys: [[String]] = [["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+let englishKeys: [[String]] = [
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"],
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
     ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
-    ["shift", "Z", "X", "C", "V", "B", "N", "M", "backspace"],     ["123", "next", "space", "return"]]
+    ["shift", "Z", "X", "C", "V", "B", "N", "M", "backspace"],
+    ["123", "next", "space", "return"]
+]
 
 
 class KeyboardViewController: Slidden.KeyboardViewController {
@@ -132,6 +136,7 @@ class KeyboardViewController: Slidden.KeyboardViewController {
     }
     
     override func returnKeyPressed(key: KeyboardKeyView) {
+        super.returnKeyPressed(key: key)
 //        heightConstraint.constant = 300
     }
 }

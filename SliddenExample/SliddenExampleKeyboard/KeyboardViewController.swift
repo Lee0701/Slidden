@@ -27,11 +27,11 @@ class KeyboardViewController: Slidden.KeyboardViewController {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let newHeight: CGFloat = 270
-        heightConstraint = NSLayoutConstraint(item: self.view, attribute:NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem:nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: newHeight)
-        heightConstraint.priority = 999
+        heightConstraint = NSLayoutConstraint(item: self.view, attribute:NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem:nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1.0, constant: newHeight)
+        heightConstraint.priority = UILayoutPriority(rawValue: 999)
         self.view.addConstraint(heightConstraint)
 
 //        self.view.setNeedsUpdateConstraints()
@@ -49,29 +49,29 @@ class KeyboardViewController: Slidden.KeyboardViewController {
     
     func setupKeysSimple() {
         let helloKey = KeyboardKeyView(type: .Character, keyCap: "Hello", outputText: "Hello")
-        helloKey.textColor = UIColor.whiteColor()
-        helloKey.color = UIColor.blueColor()
-        self.keyboardView.addKey(helloKey, row: 0)
+        helloKey.textColor = UIColor.white
+        helloKey.color = UIColor.blue
+        self.keyboardView.addKey(key: helloKey, row: 0)
         
         let worldKey = KeyboardKeyView(type: .Character, keyCap: "World", outputText: "World")
-        worldKey.textColor = UIColor.whiteColor()
-        worldKey.color = UIColor.redColor()
-        self.keyboardView.addKey(worldKey, row: 0)
+        worldKey.textColor = UIColor.white
+        worldKey.color = UIColor.red
+        self.keyboardView.addKey(key: worldKey, row: 0)
         
         let iloveKey = KeyboardKeyView(type: .Character, keyCap: "I Love", outputText: "I <3")
-        iloveKey.textColor = UIColor.whiteColor()
-        iloveKey.color = UIColor.redColor()
-        self.keyboardView.addKey(iloveKey, row: 1)
+        iloveKey.textColor = UIColor.white
+        iloveKey.color = UIColor.red
+        self.keyboardView.addKey(key: iloveKey, row: 1)
         
         let youKey = KeyboardKeyView(type: .Character, keyCap: "You", outputText: "U!")
-        youKey.textColor = UIColor.whiteColor()
-        youKey.color = UIColor.blueColor()
-        self.keyboardView.addKey(youKey, row: 1)
+        youKey.textColor = UIColor.white
+        youKey.color = UIColor.blue
+        self.keyboardView.addKey(key: youKey, row: 1)
     }
     
     func setupKeysFullEnglish() {
-        for (rowIndex, row) in enumerate(englishKeys) {
-            for (keyIndex, key) in enumerate(row) {
+        for (rowIndex, row) in englishKeys.enumerated() {
+            for (keyIndex, key) in row.enumerated() {
                 var type: KeyboardKeyView.KeyType!
                 
                 switch key {
@@ -92,22 +92,22 @@ class KeyboardViewController: Slidden.KeyboardViewController {
                 }
                 
                 let keyboardKey = KeyboardKeyView(type: type, keyCap: key, outputText: key)
-                keyboardKey.textColor = UIColor.whiteColor()
+                keyboardKey.textColor = UIColor.white
                 keyboardKey.color = ((rowIndex % 2) == 0) ? UIColor(hex:0x5B568A) : UIColor(hex: 0x443F78)
                 keyboardKey.selectedColor = ((rowIndex % 2) == 0) ? UIColor(hex: 0x443F78) : UIColor(hex: 0x5B568A)
                 
                 if keyboardKey.type == KeyboardKeyView.KeyType.KeyboardChange {
                     let img = UIImage(named:"NextKeyboard")
                     keyboardKey.image = img
-                    keyboardKey.imageView.contentMode = .Center
+                    keyboardKey.imageView.contentMode = .center
                     keyboardKey.shouldColorImage = true
                 } else if keyboardKey.type == KeyboardKeyView.KeyType.Shift {
                     let img = UIImage(named:"Shift")
                     keyboardKey.image = img
-                    keyboardKey.imageView.contentMode = .Center
+                    keyboardKey.imageView.contentMode = .center
                     keyboardKey.shouldColorImage = true
                 }
-                self.keyboardView.addKey(keyboardKey, row: rowIndex)
+                self.keyboardView.addKey(key: keyboardKey, row: rowIndex)
             }
         }
     }
@@ -117,18 +117,18 @@ class KeyboardViewController: Slidden.KeyboardViewController {
         // Dispose of any resources that can be recreated
     }
 
-    override func textWillChange(textInput: UITextInput) {
+    override func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
     }
 
-    override func textDidChange(textInput: UITextInput) {
+    override func textDidChange(_ textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
         super.textDidChange(textInput)
     }
     
     ///MARK: Inherited Delegate Methods
     override func keyPressed(key: KeyboardKeyView) {
-        super.keyPressed(key)
+        super.keyPressed(key: key)
     }
     
     override func returnKeyPressed(key: KeyboardKeyView) {

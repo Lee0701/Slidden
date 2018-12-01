@@ -18,10 +18,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardAppeared:", name: UIKeyboardDidShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardDisappeared:", name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardAppeared(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDisappeared(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
         
-        constraint = NSLayoutConstraint(item: textBox, attribute: .BottomMargin, relatedBy: .Equal, toItem: self.view, attribute: .BottomMargin, multiplier: 1.0, constant: -20.0)
+        constraint = NSLayoutConstraint(item: textBox, attribute: .bottomMargin, relatedBy: .equal, toItem: self.view, attribute: .bottomMargin, multiplier: 1.0, constant: -20.0)
         self.view.addConstraint(constraint)
     }
 
@@ -31,14 +31,14 @@ class ViewController: UIViewController {
     }
     
     ///MARK: Keyboard
-    func keyboardAppeared(notification: NSNotification) {
+    @objc func keyboardAppeared(notification: NSNotification) {
         if let info = notification.userInfo {
-            let frame = (info["UIKeyboardFrameEndUserInfoKey"] as NSValue).CGRectValue()
+            let frame = (info["UIKeyboardFrameEndUserInfoKey"] as! NSValue).cgRectValue
             self.constraint.constant = -frame.size.height - 20;
         }
     }
     
-    func keyboardDisappeared(notification: NSNotification) {
+    @objc func keyboardDisappeared(notification: NSNotification) {
         
     }
 }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, KeyboardViewDatasource {
+open class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, KeyboardViewDatasource {
     
     public enum Mode {
         case Alphabet
@@ -16,17 +16,17 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         case NumberSymbols2
     }
     
-    public var keyboardView: KeyboardView!
-    public var textDocument: KeyboardTextDocument!
-    public var autoShifted: Bool = true
-    public var mode = Mode.Alphabet
+    open var keyboardView: KeyboardView!
+    open var textDocument: KeyboardTextDocument!
+    open var autoShifted: Bool = true
+    open var mode = Mode.Alphabet
     
-    public var shouldLayoutKeyboardConstraintsAutomatically: Bool = true
+    open var shouldLayoutKeyboardConstraintsAutomatically: Bool = true
     
     private var layoutConstrained: Bool = false
     private var spaceWaiting: Bool = false
     
-    public override func viewDidLoad() {
+    open override func viewDidLoad() {
         super.viewDidLoad()
         
         let proxy = self.textDocumentProxy as UITextDocumentProxy
@@ -51,20 +51,20 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     }
     
     ///MARK: Keyboard Datasource
-    public func numberOfRowsInKeyboardView(keyboardView: KeyboardView) -> Int {
+    open func numberOfRowsInKeyboardView(keyboardView: KeyboardView) -> Int {
         return 0
     }
     
-    public func keyboardView(keyboardView: KeyboardView, numberOfKeysInRow row:Int) -> Int {
+    open func keyboardView(keyboardView: KeyboardView, numberOfKeysInRow row:Int) -> Int {
         return 0
     }
     
-    public func keyboardView(keyboardView: KeyboardView, keyAtIndexPath indexPath: NSIndexPath) -> KeyboardKeyView? {
+    open func keyboardView(keyboardView: KeyboardView, keyAtIndexPath indexPath: NSIndexPath) -> KeyboardKeyView? {
         return nil
     }
     
     ///MARK: View Layout
-    public override func updateViewConstraints() {
+    open override func updateViewConstraints() {
         // Add custom view sizing constraints here
         super.updateViewConstraints()
         
@@ -87,11 +87,11 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     }
     
     ///MARK: Text Management
-    public override func textWillChange(_ textInput: UITextInput?) {
+    open override func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
     }
     
-    public override func textDidChange(_ textInput: UITextInput?) {
+    open override func textDidChange(_ textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
         
         //var textToTranslate = getProperTextFrom(textInput)
@@ -101,7 +101,7 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     }
     
     ///MARK: Key Actions
-    public func keyPressed(key: KeyboardKeyView) {
+    open func keyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         spaceWaiting = false
         
@@ -119,14 +119,14 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         }
     }
     
-    public func specialKeyPressed(key:KeyboardKeyView) {
+    open func specialKeyPressed(key:KeyboardKeyView) {
         
     }
     
     /**
      Default action is to delete the last character.
      */
-    public func backspaceKeyPressed(key: KeyboardKeyView) {
+    open func backspaceKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         spaceWaiting = false
         
@@ -147,7 +147,7 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     /**
      Default action is to insert one blank "space" character.
      */
-    public func spaceKeyPressed(key: KeyboardKeyView) {
+    open func spaceKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         
         if let lastChar = textDocument.lastCharacter() {
@@ -171,20 +171,20 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         textDocument.insertText(text: " ")
     }
     
-    public func shiftKeyPressed(key: KeyboardKeyView) {
+    open func shiftKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         
         keyboardView.toggleShift()
         self.autoShifted = !self.autoShifted
     }
     
-    public func returnKeyPressed(key: KeyboardKeyView) {
+    open func returnKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         
         textDocument.insertText(text: "\n")
     }
     
-    public func modeChangeKeyPressed(key: KeyboardKeyView) {
+    open func modeChangeKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         if self.mode == .Alphabet {
             self.mode = .NumberSymbols1
@@ -195,13 +195,13 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         self.keyboardView.reloadKeys()
     }
     
-    public func nextKeyboardKeyPressed(key: KeyboardKeyView) {
+    open func nextKeyboardKeyPressed(key: KeyboardKeyView) {
         UIDevice.current.playInputClick()
         
         self.advanceToNextInputMode()
     }
     
-    public override func didReceiveMemoryWarning() {
+    open override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated
     }

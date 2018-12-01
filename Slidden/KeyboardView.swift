@@ -158,7 +158,7 @@ public class KeyboardView: UIView {
         }
     }
     
-    private func addKey(key: KeyboardKeyView, row: Int) {
+    public func addKey(key: KeyboardKeyView, row: Int) {
         key.addTarget(self, action: #selector(keyPressed(sender:)), for: .touchUpInside)
         if keyRows.count <= row {
             for _ in self.keyRows.count...row {

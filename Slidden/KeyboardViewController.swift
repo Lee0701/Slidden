@@ -9,7 +9,7 @@
 import UIKit
 
 public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate, KeyboardViewDatasource {
-
+    
     public enum Mode {
         case Alphabet
         case NumberSymbols1
@@ -20,7 +20,7 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     public var textDocument: KeyboardTextDocument!
     public var autoShifted: Bool = true
     public var mode = Mode.Alphabet
-
+    
     public var shouldLayoutKeyboardConstraintsAutomatically: Bool = true
     
     private var layoutConstrained: Bool = false
@@ -32,7 +32,7 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         let proxy = self.textDocumentProxy as UITextDocumentProxy
         
         textDocument = KeyboardTextDocument(proxy: proxy)
-
+        
         setupKeyboard()
         self.keyboardView.reloadKeys()
     }
@@ -44,7 +44,7 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         self.keyboardView.delegate = self
         self.keyboardView.datasource = self
         self.keyboardView.currentLanguage = .English_US
-        self.keyboardView.backgroundColor = UIColor.lightGrayColor()
+        self.keyboardView.backgroundColor = UIColor.lightGray
         
         self.view.addSubview(keyboardView)
         self.view.setNeedsUpdateConstraints()
@@ -71,27 +71,27 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         if !layoutConstrained {
             
             if shouldLayoutKeyboardConstraintsAutomatically {
-                let left = NSLayoutConstraint(item: self.keyboardView, attribute: .Left, relatedBy: .Equal, toItem: self.view, attribute: .Left, multiplier: 1.0, constant: 0.0)
-                let top = NSLayoutConstraint(item: self.keyboardView, attribute: .Top, relatedBy: .Equal, toItem: self.view, attribute: .Top, multiplier: 1.0, constant: 0.0)
-                let right = NSLayoutConstraint(item: self.keyboardView, attribute: .Right, relatedBy: .Equal, toItem: self.view, attribute: .Right, multiplier: 1.0, constant: 0.0)
-                let bottom = NSLayoutConstraint(item: self.keyboardView, attribute: .Bottom, relatedBy: .Equal, toItem: self.view, attribute: .Bottom, multiplier: 1.0, constant: 0.0)
-                left.priority = 999
-                right.priority = 999
-                bottom.priority = 999
-                top.priority = 999
+                let left = NSLayoutConstraint(item: self.keyboardView, attribute: .left, relatedBy: .equal, toItem: self.view, attribute: .left, multiplier: 1.0, constant: 0.0)
+                let top = NSLayoutConstraint(item: self.keyboardView, attribute: .top, relatedBy: .equal, toItem: self.view, attribute: .top, multiplier: 1.0, constant: 0.0)
+                let right = NSLayoutConstraint(item: self.keyboardView, attribute: .right, relatedBy: .equal, toItem: self.view, attribute: .right, multiplier: 1.0, constant: 0.0)
+                let bottom = NSLayoutConstraint(item: self.keyboardView, attribute: .bottom, relatedBy: .equal, toItem: self.view, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+                left.priority = UILayoutPriority(rawValue: 999)
+                right.priority = UILayoutPriority(rawValue: 999)
+                bottom.priority = UILayoutPriority(rawValue: 999)
+                top.priority = UILayoutPriority(rawValue: 999)
                 self.view.addConstraints([left, right, top, bottom])
             }
             
             layoutConstrained = true
         }
     }
-
+    
     ///MARK: Text Management
-    public override func textWillChange(textInput: UITextInput?) {
+    public override func textWillChange(_ textInput: UITextInput?) {
         // The app is about to change the document's contents. Perform any preparation here.
     }
-
-    public override func textDidChange(textInput: UITextInput?) {
+    
+    public override func textDidChange(_ textInput: UITextInput?) {
         // The app has just changed the document's contents, the document context has been updated.
         
         //var textToTranslate = getProperTextFrom(textInput)
@@ -102,19 +102,19 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     
     ///MARK: Key Actions
     public func keyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
+        UIDevice.current.playInputClick()
         spaceWaiting = false
         
         if let text = key.outputText {
             if key.shifted {
-                textDocument.insertText(text.uppercaseString)
+                textDocument.insertText(text: text.uppercased())
             } else {
-                textDocument.insertText(text.lowercaseString)
+                textDocument.insertText(text: text.lowercased())
             }
         }
         
         if autoShifted {
-            keyboardView.setShift(false)
+            keyboardView.setShift(shift: false)
             autoShifted = false
         }
     }
@@ -123,44 +123,44 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
         
     }
     
-    /** 
+    /**
      Default action is to delete the last character.
      */
     public func backspaceKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
+        UIDevice.current.playInputClick()
         spaceWaiting = false
-
+        
         textDocument.deleteBackward()
         
         let char = textDocument.lastCharacter()
         
         if char == nil {
             self.autoShifted = true
-            self.keyboardView.setShift(true)
+            self.keyboardView.setShift(shift: true)
         }
         else if char != " " {
             self.autoShifted = false
-            self.keyboardView.setShift(false)
+            self.keyboardView.setShift(shift: false)
         }
     }
     
     /**
      Default action is to insert one blank "space" character.
-    */
+     */
     public func spaceKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
-
+        UIDevice.current.playInputClick()
+        
         if let lastChar = textDocument.lastCharacter() {
             if ["!", "?", "."].contains(lastChar) {
                 autoShifted = true
-                keyboardView.setShift(true)
+                keyboardView.setShift(shift: true)
             } else if !spaceWaiting {
                 spaceWaiting = true
             } else if lastChar == " " {
                 textDocument.deleteBackward()
-                textDocument.insertText(".")
+                textDocument.insertText(text: ".")
                 autoShifted = true
-                keyboardView.setShift(true)
+                keyboardView.setShift(shift: true)
             }
         }
         
@@ -168,24 +168,24 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
             self.mode = .Alphabet
             self.keyboardView.reloadKeys()
         }
-        textDocument.insertText(" ")
+        textDocument.insertText(text: " ")
     }
     
     public func shiftKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
+        UIDevice.current.playInputClick()
         
         keyboardView.toggleShift()
         self.autoShifted = !self.autoShifted
     }
     
     public func returnKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
-
-        textDocument.insertText("\n")
+        UIDevice.current.playInputClick()
+        
+        textDocument.insertText(text: "\n")
     }
     
     public func modeChangeKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
+        UIDevice.current.playInputClick()
         if self.mode == .Alphabet {
             self.mode = .NumberSymbols1
         } else if self.mode == .NumberSymbols1 || self.mode == .NumberSymbols2 {
@@ -196,8 +196,8 @@ public class KeyboardViewController: UIInputViewController, KeyboardViewDelegate
     }
     
     public func nextKeyboardKeyPressed(key: KeyboardKeyView) {
-        UIDevice.currentDevice().playInputClick()
-
+        UIDevice.current.playInputClick()
+        
         self.advanceToNextInputMode()
     }
     

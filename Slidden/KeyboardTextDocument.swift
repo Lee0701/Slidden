@@ -16,7 +16,7 @@ public class KeyboardTextDocument: NSObject {
         super.init()
         self.textDocumentProxy = proxy
     }
-
+    
     public func insertText(text: String) {
         textDocumentProxy.insertText(text)
     }
@@ -38,7 +38,7 @@ public class KeyboardTextDocument: NSObject {
             text += before
         }
         if let _ = textDocumentProxy.documentContextAfterInput {
-//            text += after
+            //            text += after
         }
         return text
     }
@@ -46,7 +46,7 @@ public class KeyboardTextDocument: NSObject {
     public func selectedText() -> String? {
         
         _ = textDocumentProxy
-//        input.textInRange(<#range: UITextRange#>)
+        //        input.textInRange(<#range: UITextRange#>)
         
         return nil
     }
@@ -86,8 +86,8 @@ public class KeyboardTextDocument: NSObject {
     
     public func deleteTextInRange(range: Range<Int>) {
         if var txt = self.text() {
-            let convertedRange: Range<String.Index> = txt.convertRange(range)
-            txt.removeRange(convertedRange)
+            let convertedRange: Range<String.Index> = txt.convertRange(range: range)
+            txt.removeSubrange(convertedRange)
             for _ in txt.characters {
                 self.textDocumentProxy.deleteBackward()
             }
@@ -97,19 +97,19 @@ public class KeyboardTextDocument: NSObject {
     
     public func insertTextAtPosition(text: String, position: UInt) {
         _ = "Here is a short sentence"
-//        testing.insert(newElement: "D", atIndex: 0)
+        //        testing.insert(newElement: "D", atIndex: 0)
     }
     
-//    public func rangeOfText(text: String) -> Range<Int> {
-//        
-//    }
+    //    public func rangeOfText(text: String) -> Range<Int> {
+    //
+    //    }
 }
 
 extension String {
     public func convertRange(range: Range<Int>) -> Range<String.Index> {
-        let startIndex = self.startIndex.advancedBy(range.startIndex)
-        let endIndex = startIndex.advancedBy(range.endIndex - range.startIndex)
-        return Range<String.Index>(start: startIndex, end: endIndex)
+        let startIndex = self.index(self.startIndex, offsetBy: range.startIndex)
+        let endIndex = self.index(startIndex, offsetBy: range.endIndex - range.startIndex)
+        return startIndex..<endIndex
     }
 }
 
@@ -117,34 +117,35 @@ extension String {
     
     public var sentencesArray: [String] {
         var sentences = [String]()
-            let optionalRange = self.rangeOfString(self)
-            if let range = optionalRange {
-                self.enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.BySentences) { (substring, substringRange, enclosingRange, stop) -> () in
-                    sentences.append(substring!)
-                }
+        let optionalRange = self.range(of: self)
+        if let range = optionalRange {
+            self.enumerateSubstrings(in: range, options: NSString.EnumerationOptions.bySentences) { (substring, substringRange, enclosingRange, stop) -> () in
+                sentences.append(substring!)
             }
-            
-            return sentences
+        }
+        
+        return sentences
     }
     
     public var wordArray: [String] {
         var words = [String]()
-            let optionalRange = self.rangeOfString(self)
-            if let range = optionalRange {
-                self.enumerateSubstringsInRange(range, options: NSStringEnumerationOptions.ByWords) { (substring, substringRange, enclosingRange, stop) -> () in
-                    words.append(substring!)
-                }
+        let optionalRange = self.range(of: self)
+        if let range = optionalRange {
+            self.enumerateSubstrings(in: range, options: NSString.EnumerationOptions.byWords) { (substring, substringRange, enclosingRange, stop) -> () in
+                words.append(substring!)
             }
-            
-            return words
+        }
+        
+        return words
     }
     
     public func lastCharacter() -> Character? {
         var lastChar: Character?
-    
+        
         let length = self.characters.count
         if length > 1 {
-            let lastCharIndex = self.endIndex.advancedBy(-1)
+            //let lastCharIndex = self.endIndex.advancedBy(-1)
+            let lastCharIndex = self.index(self.endIndex, offsetBy: -1)
             lastChar = self[lastCharIndex]
         } else if length == 1 {
             lastChar = Character(self)

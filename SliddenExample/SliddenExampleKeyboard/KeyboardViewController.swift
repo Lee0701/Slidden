@@ -119,20 +119,25 @@ class KeyboardViewController: Slidden.KeyboardViewController {
         for (rowIndex, row) in englishKeys.enumerated() {
             for (keyIndex, key) in row.enumerated() {
                 var type: KeyboardKeyView.KeyType!
+                var relativeWidth: Float = 0.0
                 
                 switch key {
                 case "shift":
                     type = .Shift
                 case "space":
                     type = .Space
+                    relativeWidth = 4/8
                 case "next":
                     type = .KeyboardChange
+                    relativeWidth = 1/8
                 case "backspace":
                     type = .Backspace
                 case "123":
                     type = .ModeChange
+                    relativeWidth = 1/8
                 case "return":
                     type = .Return
+                    relativeWidth = 2/8
                 default:
                     type = .Character
                 }
@@ -141,6 +146,7 @@ class KeyboardViewController: Slidden.KeyboardViewController {
                 keyboardKey.textColor = UIColor.white
                 keyboardKey.color = ((rowIndex % 2) == 0) ? UIColor(hex:0x5B568A) : UIColor(hex: 0x443F78)
                 keyboardKey.selectedColor = ((rowIndex % 2) == 0) ? UIColor(hex: 0x443F78) : UIColor(hex: 0x5B568A)
+                keyboardKey.relativeWidth = relativeWidth
                 
                 if keyboardKey.type == KeyboardKeyView.KeyType.KeyboardChange {
                     let img = UIImage(named:"NextKeyboard")

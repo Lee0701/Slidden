@@ -99,19 +99,7 @@ public class KeyboardView: UIView {
                     
                     key.translatesAutoresizingMaskIntoConstraints = false
                     
-                    var relativeWidth: CGFloat = 0.0;
-                    switch key.type! {
-                    case .ModeChange:
-                        relativeWidth = 1/8
-                    case .KeyboardChange:
-                        relativeWidth = 1/8
-                    case .Space:
-                        relativeWidth = 4/8
-                    case .Return:
-                        relativeWidth = 2/8
-                    default:
-                        relativeWidth = 0.0
-                    }
+                    var relativeWidth: CGFloat = CGFloat(key.relativeWidth)
                     
                     if let lastView = lastKeyView {
                         let left = NSLayoutConstraint(item: key, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: lastView, attribute: NSLayoutConstraint.Attribute.right, multiplier: 1.0, constant: 0.0)

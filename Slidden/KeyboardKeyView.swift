@@ -39,6 +39,7 @@ public class KeyboardKeyView: UIControl {
             self.redrawText()
         }
     }
+    public var relativeWidth: Float = 0.0
     
     public var outputText: String?
     

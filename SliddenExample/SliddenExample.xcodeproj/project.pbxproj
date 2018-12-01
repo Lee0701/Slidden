@@ -17,7 +17,6 @@
 		659975B519C2AFAD00955985 /* SliddenExampleKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 659975AC19C2AFAD00955985 /* SliddenExampleKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BE92193121B260200033A565 /* Slidden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F0D1819C2AE4B001FE3C2 /* Slidden.framework */; };
 		BE92193221B260230033A565 /* Slidden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F0D1819C2AE4B001FE3C2 /* Slidden.framework */; };
-		BE92193321B269310033A565 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 652F0CF919C2AE2D001FE3C2 /* Images.xcassets */; };
 		BE92193521B269830033A565 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE92193421B269830033A565 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -373,7 +372,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE92193321B269310033A565 /* Images.xcassets in Resources */,
 				BE92193521B269830033A565 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

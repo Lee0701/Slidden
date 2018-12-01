@@ -110,6 +110,11 @@ class KeyboardViewController: Slidden.KeyboardViewController {
                     keyboardKey.image = img
                     keyboardKey.imageView.contentMode = .center
                     keyboardKey.shouldColorImage = true
+                } else if keyboardKey.type == KeyboardKeyView.KeyType.Backspace {
+                    let img = UIImage(named:"Backspace")
+                    keyboardKey.image = img
+                    keyboardKey.imageView.contentMode = .center
+                    keyboardKey.shouldColorImage = true
                 }
                 self.keyboardView.addKey(key: keyboardKey, row: rowIndex)
             }

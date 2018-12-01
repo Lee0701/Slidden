@@ -17,6 +17,8 @@
 		659975B519C2AFAD00955985 /* SliddenExampleKeyboard.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 659975AC19C2AFAD00955985 /* SliddenExampleKeyboard.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BE92193121B260200033A565 /* Slidden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F0D1819C2AE4B001FE3C2 /* Slidden.framework */; };
 		BE92193221B260230033A565 /* Slidden.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 652F0D1819C2AE4B001FE3C2 /* Slidden.framework */; };
+		BE92193321B269310033A565 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 652F0CF919C2AE2D001FE3C2 /* Images.xcassets */; };
+		BE92193521B269830033A565 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE92193421B269830033A565 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +102,7 @@
 		659975AC19C2AFAD00955985 /* SliddenExampleKeyboard.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SliddenExampleKeyboard.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		659975AF19C2AFAD00955985 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		659975B019C2AFAD00955985 /* KeyboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardViewController.swift; sourceTree = "<group>"; };
+		BE92193421B269830033A565 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -210,6 +213,7 @@
 		659975AE19C2AFAD00955985 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BE92193421B269830033A565 /* Images.xcassets */,
 				659975AF19C2AFAD00955985 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -369,6 +373,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE92193321B269310033A565 /* Images.xcassets in Resources */,
+				BE92193521B269830033A565 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

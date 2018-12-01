@@ -216,20 +216,20 @@ public class KeyboardKeyView: UIControl {
     }
     
     private func redrawImage() {
-        _ = (self.shouldColorImage) ? recolorImage(image: image, color: textColor) : image
+        let endImage = (self.shouldColorImage) ? recolorImage(image: image, color: textColor) : image
         
-        //        if let img = endImage {
-        //            self.imageView.image = img
-        //            self.textLabel.hidden = true
-        //            self.addSubview(self.imageView)
-        //            self.imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        //            self.addConstraints(constraintsForContentView(self.imageView))
-        //            self.setNeedsUpdateConstraints()
-        //        } else {
-        //            self.imageView.removeConstraints(self.imageView.constraints())
-        //            self.textLabel.hidden = false
-        //            self.setNeedsUpdateConstraints()
-        //        }
+        if let img = endImage {
+            self.imageView.image = img
+            self.textLabel.isHidden = true
+            self.addSubview(self.imageView)
+            self.imageView.translatesAutoresizingMaskIntoConstraints = false
+            self.addConstraints(constraintsForContentView(view: self.imageView))
+            self.setNeedsUpdateConstraints()
+        } else {
+            self.imageView.removeConstraints(self.imageView.constraints)
+            self.textLabel.isHidden = false
+            self.setNeedsUpdateConstraints()
+        }
     }
     
     private func recolor() {
